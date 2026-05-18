@@ -1,6 +1,50 @@
 # legionflyff
 Legion FlyFF - Ultimate Private Server Experience
 
+## Run from the GitHub repo without a database
+
+GitHub cannot run the Next.js server directly. The repo is configured with a
+GitHub Actions build check that installs dependencies and runs `npm run build`
+without any SQL Server/database secrets.
+
+What works without a database:
+
+- GitHub Actions can verify that the project builds.
+- Vercel or another host can deploy the public pages.
+- Static/client pages can load normally.
+
+What needs a database later:
+
+- Login/register/account pages
+- Rankings, characters, downloads, news posts, admin data
+- Any `/api/*` route that imports `src/lib/db.js`
+
+### Local setup without database
+
+```bash
+npm install
+copy .env.example .env
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+Database-backed API routes will return errors until real `DB_*` values are set.
+
+### Deploy without database
+
+For Vercel, import this repository and add only these environment variables:
+
+```env
+NEXT_PUBLIC_APP_URL=https://your-domain.example
+NEXT_PUBLIC_BASE_URL=https://your-domain.example
+NEXT_PUBLIC_API_URL=https://your-domain.example/api
+NEXTAUTH_SECRET=replace-with-a-long-random-value
+```
+
+Do not add `DB_USER`, `DB_PASS`, `DB_SERVER`, or `DB_NAME` if you want the deploy
+to stay database-free.
+
 ## Admin role
 
 Admin access uses the **`super`** role. The role is stored in the database and put into the session at login.
