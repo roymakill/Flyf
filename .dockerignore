@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+SQLData
+*.bak
+*.log
+next-*.log
+next-*.err.log
+npm-debug.log*
+.env.local
+.env*.local
